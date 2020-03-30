@@ -1,0 +1,4 @@
+#!/bin/sh -e
+source /etc/envvars
+sv check cgit >/dev/null || true
+exec nginx -g 'daemon off;'

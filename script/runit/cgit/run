@@ -1,0 +1,3 @@
+#!/bin/sh -e
+source /etc/envvars
+cgit-fcgiwrap

@@ -1,8 +1,8 @@
-FROM alpine:latest
-MAINTAINER Ankit R Gadiya <me@argp.in>
+FROM alpine:3.11
 
 # Install packages
 RUN apk update && apk add \
+		runit \
 		git \
 		cgit \
 		nginx \
@@ -20,6 +20,10 @@ RUN mkdir -p /run/nginx
 
 # Copy script
 COPY script/init.sh /opt/init.sh
+COPY script/cgit-fcgiwrap.sh /bin/cgit-fcgiwrap
+RUN chmod +x /bin/cgit-fcgiwrap
+ADD script/runit /etc/sv
+RUN chmod +x /etc/sv/*/*
 
 # Syntax highlighting
 COPY assets/syntax.css /opt/syntax.css
@@ -29,5 +33,5 @@ RUN cat /opt/syntax.css >> /usr/share/webapps/cgit/cgit.css
 RUN rm /opt/syntax.css
 
 # Server
-EXPOSE 80
+EXPOSE 8080
 CMD ["sh", "/opt/init.sh"]
