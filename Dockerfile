@@ -6,6 +6,7 @@ RUN apk update && apk add \
 		git \
 		cgit \
 		nginx \
+		markdown \
 		highlight \
 		fcgiwrap \
 		spawn-fcgi
@@ -31,6 +32,10 @@ COPY script/syntax-highlighting.sh /usr/lib/cgit/filters/syntax-highlighting.sh
 RUN chmod 777 /usr/lib/cgit/filters/syntax-highlighting.sh
 RUN cat /opt/syntax.css >> /usr/share/webapps/cgit/cgit.css
 RUN rm /opt/syntax.css
+
+# About fillter
+COPY script/about-formatting.sh /usr/lib/cgit/filters/about-formatting.sh
+RUN chmod 777 /usr/lib/cgit/filters/about-formatting.sh
 
 # Server
 EXPOSE 8080

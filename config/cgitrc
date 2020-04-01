@@ -6,6 +6,7 @@ logo=/cgit.png
 footer=
 
 source-filter=/usr/lib/cgit/filters/syntax-highlighting.sh
+about-filter=/usr/lib/cgit/filters/about-formatting.sh
 root-title=Repositories
 root-desc=
 noplainemail=1
