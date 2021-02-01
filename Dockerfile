@@ -9,7 +9,9 @@ RUN apk update && apk add \
 		markdown \
 		highlight \
 		fcgiwrap \
-		spawn-fcgi
+		spawn-fcgi \
+		py3-markdown \
+		py3-pygments
 
 # Copy configuration
 COPY config/nginx.conf /etc/nginx/conf.d/git.conf
