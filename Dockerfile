@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM alpine:3.15
 
 # Install packages
 RUN apk update && apk add \
@@ -14,17 +14,17 @@ RUN apk update && apk add \
 		py3-pygments
 
 # Copy configuration
-COPY config/nginx.conf /etc/nginx/conf.d/git.conf
+COPY config/nginx.conf /etc/nginx/http.d/git.conf
 COPY config/cgitrc /etc/cgitrc
 
 # Enable configuration
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm -f /etc/nginx/http.d/default.conf
 RUN mkdir -p /run/nginx
 
 # Copy script
-COPY script/init.sh /opt/init.sh
+COPY script/init.sh /bin/init.sh
 COPY script/cgit-fcgiwrap.sh /bin/cgit-fcgiwrap
-RUN chmod +x /bin/cgit-fcgiwrap
+RUN chmod +x /bin/init.sh && chmod +x /bin/cgit-fcgiwrap
 ADD script/runit /etc/sv
 RUN chmod +x /etc/sv/*/*
 
@@ -41,4 +41,5 @@ RUN chmod 777 /usr/lib/cgit/filters/about-formatting.sh
 
 # Server
 EXPOSE 8080
-CMD ["sh", "/opt/init.sh"]
+
+ENTRYPOINT ["init.sh"]
